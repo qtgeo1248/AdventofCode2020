@@ -23,7 +23,7 @@ int *get_ints(char *filename, size_t len) {
 }
 
 int main() {
-    char *file = "Day1Entries.txt";
+    char *file = "Entries.txt";
     int n = len_file(file);
     int *arr = get_ints(file, n);
 
@@ -31,8 +31,9 @@ int main() {
 
     for (int i = 0; i < n; i++)
         for (int j = i; j < n; j++)
-            if (arr[i] + arr[j] == 2020)
-                ans = arr[i] * arr[j];
+            for (int k = j; k < n; k++)
+                if (arr[i] + arr[j] + arr[k] == 2020)
+                    ans = arr[i] * arr[j] * arr[k];
     printf("Answer: %ld\n", ans);
 
     return 0;

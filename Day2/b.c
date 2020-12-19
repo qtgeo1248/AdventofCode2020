@@ -4,7 +4,7 @@
 
 
 int main() {
-    char *filename = "Day2Passwords.txt";
+    char *filename = "Passwords.txt";
     FILE *f = fopen(filename, "r");
     char *line = NULL;
     size_t n = 0;
