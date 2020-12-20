@@ -19,28 +19,20 @@ int main() {
     char *curs = calloc(sizeof(char), 3);
 
     for (cur = fgetc(f); cur != EOF; cur = fgetc(f)) {
-        if (cur == ':')
-            switch (curs[0] + curs[1] + curs[2]) {
-                case 'M': // byr
-                    printf("byr");
+        if (cur == ':') switch (curs[0] + curs[1] + curs[2]) {
+                case 333: // byr
                     info[0] = true; break;
-                case 'T': // iyr
-                    printf("iyr");
+                case 340: // iyr
                     info[1] = true; break;
-                case 'P': // eyr
-                    printf("eyr");
+                case 336: // eyr
                     info[2] = true; break;
-                case 'C': // hgt
-                    printf("hgt");
+                case 323: // hgt
                     info[3] = true; break;
-                case '7': // hcl
-                    printf("hcl");
+                case 311: // hcl
                     info[4] = true; break;
-                case '4': // ecl
-                    printf("ecl");
+                case 308: // ecl
                     info[5] = true; break;
-                case '=': // pid
-                    printf("pid");
+                case 317: // pid
                     info[6] = true; break;
             }
         if (cur == '\n' && curs[2] == '\n') {
