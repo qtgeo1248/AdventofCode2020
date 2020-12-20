@@ -52,5 +52,10 @@ int main() {
         j = (j + 3) % m;
     }
     printf("Answer: %zu\n", count);
+
+    for (size_t i = 0; i < n; i++)
+        free(trees[i]);
+    free(trees);
+    
     return 0;
 }

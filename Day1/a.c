@@ -35,5 +35,7 @@ int main() {
                 ans = arr[i] * arr[j];
     printf("Answer: %ld\n", ans);
 
+    free(arr);
+
     return 0;
 }

@@ -23,6 +23,8 @@ int main() {
             if (pass[i] == ch) count++;
         if (low <= count && count <= high)
             valids++;
+        
+        free(pass);
     }
 
     printf("Answer: %zu\n", valids);

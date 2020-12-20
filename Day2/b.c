@@ -20,6 +20,8 @@ int main() {
         
         if ((pass[i - 1] == c || pass[j - 1] == c) && pass[i - 1] != pass[j - 1])
             valids++;
+
+        free(pass);
     }
 
     printf("Answer: %zu\n", valids);

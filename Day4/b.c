@@ -3,65 +3,52 @@
 #include <string.h>
 #include <stdbool.h>
 
-size_t num_rows(char *filename) {
-    size_t n = 0;
-    FILE *f = fopen(filename, "r");
-    for (char c = fgetc(f); c != EOF; c = fgetc(f))
-        if (c == '\n') n++;
-    fclose(f);
-    return n;
-}
-
-size_t num_cols(char *filename) {
-    size_t m = 0;
-    FILE *f = fopen(filename, "r");
-    for (char c = fgetc(f); c != '\n'; c = fgetc(f))
-        m++;
-    fclose(f);
-    return m;
-}
-
-bool **get_trees(char *filename, size_t n, size_t m) {
-    FILE *f = fopen(filename, "r");
-    bool **trees = calloc(sizeof(bool*), n);
-    for (size_t i = 0; i < n; i++)
-        trees[i] = calloc(sizeof(bool), m);
-    
-    char c;
-    for (size_t i = 0; i < n; i++)
-        for (size_t j = 0; j < m; j++) {
-            c = fgetc(f);
-            if (c == '\n') c = fgetc(f);
-            if (c == '#') trees[i][j] = true;
-        }
-
-    fclose(f);
-    return trees;
-}
-
-size_t encountered(bool **trees, int n, int m, int rowadd, int coladd) {
-    size_t count = 0;
-    size_t j = 0;
-    for (size_t i = 0; i < n; i += rowadd) {
-        if (trees[i][j]) count++;
-        j = (j + coladd) % m;
-    }
-
-    return count;
+bool is_pass(bool* info) {
+    for (int i = 0; i < 7; i++)
+        if (!info[i]) return false;
+    return true;
 }
 
 int main() {
-    char *filename = "Day3Trees.txt";
-    size_t n = num_rows(filename);
-    size_t m = num_cols(filename);
-    bool **trees = get_trees(filename, n, m);
+    char *filename = "Passports.txt";
+    FILE *f = fopen(filename, "r");
+    size_t count = 0;
 
-    size_t count = 1;
-    count *= encountered(trees, n, m, 1, 1);
-    count *= encountered(trees, n, m, 1, 3);
-    count *= encountered(trees, n, m, 1, 5);
-    count *= encountered(trees, n, m, 1, 7);
-    count *= encountered(trees, n, m, 2, 1);
+    char cur = '\0';
+    bool *info = calloc(sizeof(bool), 7);
+    char *curs = calloc(sizeof(char), 3);
+
+    for (cur = fgetc(f); cur != EOF; cur = fgetc(f)) {
+        if (cur == ':') switch (curs[0] + curs[1] + curs[2]) {
+                case 333: // byr
+                    info[0] = true; break;
+                case 340: // iyr
+                    info[1] = true; break;
+                case 336: // eyr
+                    info[2] = true; break;
+                case 323: // hgt
+                    info[3] = true; break;
+                case 311: // hcl
+                    info[4] = true; break;
+                case 308: // ecl
+                    info[5] = true; break;
+                case 317: // pid
+                    info[6] = true; break;
+            }
+        if (cur == '\n' && curs[2] == '\n') {
+            if (is_pass(info)) count++;
+            free(info);
+            info = calloc(sizeof(bool), 7);
+        }
+        curs[0] = curs[1];
+        curs[1] = curs[2];
+        curs[2] = cur;
+    }
+
     printf("Answer: %zu\n", count);
+
+    free(info);
+    free(curs);
+    fclose(f);
     return 0;
 }

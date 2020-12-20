@@ -63,5 +63,10 @@ int main() {
     count *= encountered(trees, n, m, 1, 7);
     count *= encountered(trees, n, m, 2, 1);
     printf("Answer: %zu\n", count);
+
+    for (size_t i = 0; i < n; i++)
+        free(trees[i]);
+    free(trees);
+    
     return 0;
 }
