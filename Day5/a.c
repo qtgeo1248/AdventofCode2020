@@ -3,12 +3,6 @@
 #include <string.h>
 #include <stdbool.h>
 
-bool is_pass(bool* info) {
-    for (int i = 0; i < 7; i++)
-        if (!info[i]) return false;
-    return true;
-}
-
 int main() {
     char *filename = "Seats.txt";
     FILE *f = fopen(filename, "r");
