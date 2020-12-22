@@ -3,28 +3,29 @@
 #include <string.h>
 #include <stdbool.h>
 
-size_t count_yes(bool *yes) {
+size_t count_yes(size_t *yes, size_t num) {
     size_t count = 0;
     for (size_t i = 0; i < 26; i++)
-        if (yes[i]) count++;
+        if (yes[i] == num) count++;
     return count;
 }
 
 int main() {
     char *filename = "Answers.txt";
     FILE *f = fopen(filename, "r");
-    bool *yes = calloc(sizeof(bool), 26);
+    size_t *yes = calloc(sizeof(size_t), 26);
     char *person = NULL; size_t n = 0;
-    size_t count = 0;
+    size_t num = 0; size_t count = 0;
 
     while (getline(&person, &n, f) != -1) {
         if (strcmp(person, "\n") == 0) {
-            count += count_yes(yes);
-            free(yes); yes = calloc(sizeof(bool), 26);
+            count += count_yes(yes, num);
+            free(yes); yes = calloc(sizeof(size_t), 26);
+            num = 0;
         } else {
-            for (size_t i = 0; i < strlen(person) - 1; i++) {
-                yes[person[i] - 'a'] = true;
-            }
+            num++;
+            for (size_t i = 0; i < strlen(person) - 1; i++)
+                yes[person[i] - 'a']++;
         }
     }
     printf("Answer: %zu\n", count);

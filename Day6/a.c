@@ -22,9 +22,8 @@ int main() {
             count += count_yes(yes);
             free(yes); yes = calloc(sizeof(bool), 26);
         } else {
-            for (size_t i = 0; i < strlen(person) - 1; i++) {
+            for (size_t i = 0; i < strlen(person) - 1; i++)
                 yes[person[i] - 'a'] = true;
-            }
         }
     }
     printf("Answer: %zu\n", count);
