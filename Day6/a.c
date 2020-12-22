@@ -11,7 +11,7 @@ size_t count_yes(bool *yes) {
 }
 
 int main() {
-    char *filename = "Seats.txt";
+    char *filename = "Answers.txt";
     FILE *f = fopen(filename, "r");
     bool *yes = calloc(sizeof(bool), 26);
     char *person = NULL; size_t n = 0;
@@ -22,8 +22,9 @@ int main() {
             count += count_yes(yes);
             free(yes); yes = calloc(sizeof(bool), 26);
         } else {
-            for (size_t i = 0; i < n - 1; i++)
+            for (size_t i = 0; i < strlen(person) - 1; i++) {
                 yes[person[i] - 'a'] = true;
+            }
         }
     }
     printf("Answer: %zu\n", count);
